@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+  photo    String @default("https://cdn-icons-png.flaticon.com/512/17/17004.png")
+  posts    Post[]
+  comments  Comment[]
+  likes    Like[]
+
+  @@map("users")
+}
+
+model Post {
+  id         String   @id @default(uuid())
+  title      String
+  content    String
+  created_at DateTime @default(now())
+  deleted_at DateTime?
+  userId     String
+  user       User     @relation(fields: [userId], references: [id],  onDelete: Cascade)
+  comments    Comment[]
+  likes      Like[]
+
+  @@map("posts")
+}
+
+model Comment{
+  id         String   @id @default(uuid())
+  content    String
+  created_at DateTime @default(now())
+  deleted_at DateTime?
+  userId     String
+  postId     String
+  likes      Like[]
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
+}
+
+model Like{
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  userId     String
+  postId     String?
+  commentId   String?
+  user       User     @relation(fields: [userId], references: [id],  onDelete: Cascade)
+  post       Post?     @relation(fields: [postId], references: [id],  onDelete: Cascade)
+  comment     Comment?   @relation(fields: [commentId], references: [id],  onDelete: Cascade)
+
+  @@map("likes")
+}
