@@ -8,6 +8,7 @@ import fastifyCookie from "@fastify/cookie"
 import fastifyCors from "@fastify/cors"
 import { likesRoutes } from "./http/controllers/likes/routes"
 import { commentsRoutes } from "./http/controllers/comments/routes"
+import fastifyMultipart from '@fastify/multipart'
 
 export const app = fastify()
 
@@ -28,6 +29,7 @@ app.register(fastifyJwt, {
         expiresIn: '10m'
     }
 })
+app.register(fastifyMultipart)
 
 app.register(fastifyCookie)
 

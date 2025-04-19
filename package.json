@@ -15,6 +15,7 @@
     "@fastify/cookie": "11.0.2",
     "@fastify/cors": "10.0.2",
     "@fastify/jwt": "9.0.4",
+    "@fastify/multipart": "9.0.3",
     "@prisma/client": "6.4.1",
     "@types/bcryptjs": "2.4.6",
     "@types/multer": "1.4.12",

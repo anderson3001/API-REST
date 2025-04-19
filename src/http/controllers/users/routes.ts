@@ -1,4 +1,5 @@
 import { FastifyInstance } from "fastify";
+import multer from 'fastify-multer'
 import { register } from "./register";
 import { authenticate } from "./authenticate";
 import { get } from "./get";
@@ -8,6 +9,9 @@ import { getAll } from "./get-all";
 import { profile } from "./profile";
 import { verifyJWT } from "../../middlewares/verify-jwt";
 import { refresh } from "./refresh";
+import { updatePhoto } from "./update-photo";
+
+const upload = multer({ dest: './uploads' })
 
 export function userRoutes(app: FastifyInstance) {
     app.post('/users', register)
@@ -24,4 +28,6 @@ export function userRoutes(app: FastifyInstance) {
 
     //autenitcados
     app.get('/profile',{ onRequest: [verifyJWT]}, profile)
+
+    app.patch('/users/:userId/avatar', {preHandler: [verifyJWT, upload.single('photo')]}, updatePhoto)
 }

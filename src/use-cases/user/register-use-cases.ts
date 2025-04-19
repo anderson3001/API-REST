@@ -7,7 +7,7 @@ interface RegisterUseCaseRequest {
     name: string
     email: string
     password: string   
-    photo: string
+    photo?: string
 }
 
 export class RegisterUseCase{

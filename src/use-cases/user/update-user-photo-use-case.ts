@@ -11,14 +11,18 @@ export class UpdateUserAvatarUseCase {
     }
 
     if (user.photo) {
-      UploadService.deleteImage(user.photo);
+      await UploadService.deleteImage(user.photo);
     }
 
+    try{
     await prisma.user.update({
       where: { id: userId },
       data: { photo: avatarFilename },
     });
 
     return { message: 'Avatar updated successfully' };
+    } catch (err) {
+      return { message: 'Error updating avatar' };
+    }
   }
 }
