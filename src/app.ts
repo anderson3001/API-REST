@@ -9,6 +9,9 @@ import fastifyCors from "@fastify/cors"
 import { likesRoutes } from "./http/controllers/likes/routes"
 import { commentsRoutes } from "./http/controllers/comments/routes"
 import fastifyMultipart from '@fastify/multipart'
+import { fastifySwagger } from '@fastify/swagger'
+import swaggerUI from '@fastify/swagger-ui'
+import swaggerDocs from './swagger.json'
 
 export const app = fastify()
 
@@ -43,4 +46,19 @@ app.setErrorHandler((error, request, reply) => {
         return reply.status(400).send({message: 'Validation error', issues: error.format()})
     }
     return reply.status(500).send({message: 'Internal server error'})
+})
+  
+app.register(fastifySwagger, {
+    mode: 'static',
+    specification: {
+      path: './swagger.json',
+      baseDir: __dirname,
+    },
+})
+app.register(swaggerUI, {
+routePrefix: '/api-docs',
+uiConfig: {
+    docExpansion: 'full',
+    deepLinking: false,
+    },
 })
