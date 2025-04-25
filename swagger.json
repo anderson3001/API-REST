@@ -6,7 +6,7 @@
         "contact": {
             "name": "Anderson S. Gomes",
             "email": "derson3001@gmail.com"
-    },
+        },
         "version": "1.0.0"
     },
     "servers": [
@@ -59,7 +59,7 @@
                 }
             }
         },
-        "/token/refresh":{
+        "/token/refresh": {
             "patch": {
                 "summary": "Atualização de token",
                 "description": "Atualiza o token de autenticação do usuário.",
@@ -116,14 +116,14 @@
                             "example": {
                                 "name": "Anderson Gomes",
                                 "email": "email@email.com",
-                                "password":"123456"
+                                "password": "123456"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Usuário criado com sucesso!"                        
+                        "description": "Usuário criado com sucesso!"
                     },
                     "409": {
                         "description": "Usuário já existe!"
@@ -136,10 +136,9 @@
                 "tags": ["Usuário"],
                 "responses": {
                     "200": {
-                        "description": "Lista de usuários"  
+                        "description": "Lista de usuários"
                     }
                 }
-                
             }
         },
         "/profile": {
@@ -153,7 +152,7 @@
                     }
                 ],
                 "responses": {
-                    "200":  {
+                    "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
@@ -212,7 +211,6 @@
                         }
                     }
                 }
-                
             },
             "patch": {
                 "summary": "Atualização de usuário",
@@ -248,7 +246,7 @@
                     }
                 },
                 "responses": {
-                    "200":  {
+                    "200": {
                         "description": "OK",
                         "content": {
                             "application/json": {
@@ -269,7 +267,54 @@
                         "description": "Token inválido!"
                     }
                 }
-
+            }
+        },
+        "/users/{userId}/avatar": {
+            "patch": {
+                "summary": "Atualização de foto de perfil",
+                "description": "Atualiza a foto de perfil do usuário.",
+                "tags": ["Usuário"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do usuário",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "photo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "required": ["photo"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Foto de perfil atualizada com sucesso!"
+                    },
+                    "403": {
+                        "description": "Token inválido!"
+                    }
+                }
             }
         }
     },
@@ -279,40 +324,40 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                    "type": "string",
-                    "format": "uuid"
+                        "type": "string",
+                        "format": "uuid"
                     },
                     "name": {
-                    "type": "string"
+                        "type": "string"
                     },
                     "email": {
-                    "type": "string",
-                    "format": "email"
+                        "type": "string",
+                        "format": "email"
                     },
                     "password": {
-                    "type": "string",
-                    "format": "password"
+                        "type": "string",
+                        "format": "password"
                     },
                     "photo": {
-                    "type": "string"
+                        "type": "string"
                     },
                     "comments": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/comment"
-                    }
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/comment"
+                        }
                     },
                     "likes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/like"
-                    }
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/like"
+                        }
                     },
                     "posts": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/post"
-                    }
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/post"
+                        }
                     }
                 }
             },
@@ -334,12 +379,12 @@
                         "nullable": true
                     },
                     "created_at": {
-                      "type": "string",
-                      "format": "date-time"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "userId": {
-                      "type": "string",
-                      "format": "uuid"
+                        "type": "string",
+                        "format": "uuid"
                     },
                     "comments": {
                         "type": "array",
@@ -366,16 +411,16 @@
                         "type": "string"
                     },
                     "created_at": {
-                      "type": "string",
-                      "format": "date-time"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "userId": {
-                      "type": "string",
-                      "format": "uuid"
+                        "type": "string",
+                        "format": "uuid"
                     },
                     "postId": {
-                      "type": "string",
-                      "format": "uuid"
+                        "type": "string",
+                        "format": "uuid"
                     },
                     "likes": {
                         "type": "array",
@@ -393,22 +438,22 @@
                         "format": "uuid"
                     },
                     "created_at": {
-                      "type": "string",
-                      "format": "date-time"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "userId": {
-                      "type": "string",
-                      "format": "uuid"
+                        "type": "string",
+                        "format": "uuid"
                     },
                     "postId": {
-                      "type": "string",
-                      "format": "uuid",
-                      "nullable": true
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
                     },
                     "commentId": {
-                      "type": "string",
-                      "format": "uuid",
-                      "nullable": true
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
                     }
                 }
             }
@@ -422,4 +467,3 @@
         }
     }
 }
-    
