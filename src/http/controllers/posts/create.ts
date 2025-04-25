@@ -13,6 +13,15 @@ export async function create(request: FastifyRequest,reply: FastifyReply) {
 
     const userId = request.user.sub
 
+    const file = (request as any).file
+    const photo = file?.filename
+
+    if (!file) {
+    return reply.status(400).send({
+        message: "Nenhuma imagem foi enviada.",
+    })
+}
+
     try {
         const prismaPostsRepository = new PrismaPostsRepository()
         const createPostUseCase = new CreatePostUseCase(prismaPostsRepository)
@@ -20,7 +29,8 @@ export async function create(request: FastifyRequest,reply: FastifyReply) {
         await createPostUseCase.execute({
             title,
             content,
-            userId
+            userId,
+            photo
         })
 
     } catch (err) {

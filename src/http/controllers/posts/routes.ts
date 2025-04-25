@@ -6,9 +6,12 @@ import { update } from "./update";
 import { getAll } from "./get-all";
 import { getByUser } from "./get-by-user";
 import { verifyJWT } from "../../middlewares/verify-jwt";
+import multer from 'fastify-multer'
+
+const upload = multer({ dest: 'uploads/posts' })
 
 export function postsRoutes(app: FastifyInstance) {
-    app.post('/posts', { preHandler: [verifyJWT]}, create)//autentificado
+    app.post('/posts', { preHandler: [verifyJWT, upload.single('photo')]}, create)//autentificado
 
     app.get('/posts/:postId', get)
     app.get('/posts', getAll)

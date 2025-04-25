@@ -30,6 +30,7 @@ model Post {
   user       User     @relation(fields: [userId], references: [id],  onDelete: Cascade)
   comments    Comment[]
   likes      Like[]
+  photo      String? 
 
   @@map("posts")
 }
