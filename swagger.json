@@ -86,6 +86,56 @@
                         "description": "Usuário já existe!"
                     }
                 }
+            },
+            "get": {
+                "summary": "Listar usuários",
+                "description": "Retorna uma lista de usuários.",
+                "tags": ["Usuário"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários"  
+                    }
+                }
+                
+            }
+        },
+        "/users/{userId}": {
+            "get": {
+                "summary": "Buscar usuário por ID",
+                "description": "Retorna um usuário específico pelo ID.",
+                "tags": ["Usuário"],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do usuário",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                },
+                                "example": {
+                                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                                    "name": "Anderson Gomes",
+                                    "email": "email@email.com",
+                                    "password": "senhaCriptografada",
+                                    "photo": "urlDaFoto"
+                                }
+                            }
+                        }
+                    }
+                }
+                
             }
         }
     },
