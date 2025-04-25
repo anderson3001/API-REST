@@ -1,0 +1,241 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de uma rede social",
+        "description": "Esta API fornece funcionalidades básicas de uma rede social, permitindo que usuários autentiquem-se, criem posts, comentem em publicações e gerenciem seu conteúdo.",
+        "contact": {
+            "name": "Anderson S. Gomes",
+            "email": "derson3001@gmail.com"
+    },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Servidor local"
+        }
+    ],
+    "paths": {
+        "/authenticate": {
+            "post": {
+                "summary": "Autenticação de usuário",
+                "description": "Autentica um usuário e retorna um token de sessão.",
+                "tags": ["Autenticação"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            },
+                            "example": {
+                                "email": "email@email.com",
+                                "password": "123456"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "token": "seuTokenAqui"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas!"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "summary": "Criação de usuário",
+                "description": "Cria um novo usuário.",
+                "tags": ["Usuário"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            },
+                            "example": {
+                                "name": "Anderson Gomes",
+                                "email": "email@email.com",
+                                "password":"123456"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso!"                        
+                    },
+                    "409": {
+                        "description": "Usuário já existe!"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "user": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                    "type": "string",
+                    "format": "uuid"
+                    },
+                    "name": {
+                    "type": "string"
+                    },
+                    "email": {
+                    "type": "string",
+                    "format": "email"
+                    },
+                    "password": {
+                    "type": "string",
+                    "format": "password"
+                    },
+                    "photo": {
+                    "type": "string"
+                    },
+                    "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/comment"
+                    }
+                    },
+                    "likes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/like"
+                    }
+                    },
+                    "posts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/post"
+                    }
+                    }
+                }
+            },
+            "post": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "photo": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "comments": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/comment"
+                        }
+                    },
+                    "likes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/like"
+                        }
+                    }
+                }
+            },
+            "comment": {
+                "type": "obejct",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "postId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "likes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/like"
+                        }
+                    }
+                }
+            },
+            "like": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "postId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    },
+                    "commentId": {
+                      "type": "string",
+                      "format": "uuid",
+                      "nullable": true
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
+    

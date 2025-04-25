@@ -11,7 +11,6 @@ import { commentsRoutes } from "./http/controllers/comments/routes"
 import fastifyMultipart from '@fastify/multipart'
 import { fastifySwagger } from '@fastify/swagger'
 import swaggerUI from '@fastify/swagger-ui'
-import swaggerDocs from './swagger.json'
 
 export const app = fastify()
 
@@ -32,6 +31,22 @@ app.register(fastifyJwt, {
         expiresIn: '10m'
     }
 })
+
+app.register(fastifySwagger, {
+    mode: 'static',
+    specification: {
+      path: './swagger.json',
+      baseDir: __dirname,
+    },
+})
+app.register(swaggerUI, {
+routePrefix: '/api-docs',
+uiConfig: {
+    docExpansion: 'full',
+    deepLinking: false,
+    },
+})
+
 app.register(fastifyMultipart)
 
 app.register(fastifyCookie)
@@ -48,17 +63,4 @@ app.setErrorHandler((error, request, reply) => {
     return reply.status(500).send({message: 'Internal server error'})
 })
   
-app.register(fastifySwagger, {
-    mode: 'static',
-    specification: {
-      path: './swagger.json',
-      baseDir: __dirname,
-    },
-})
-app.register(swaggerUI, {
-routePrefix: '/api-docs',
-uiConfig: {
-    docExpansion: 'full',
-    deepLinking: false,
-    },
-})
+
