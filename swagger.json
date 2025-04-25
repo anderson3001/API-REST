@@ -59,6 +59,49 @@
                 }
             }
         },
+        "/token/refresh":{
+            "patch": {
+                "summary": "Atualização de token",
+                "description": "Atualiza o token de autenticação do usuário.",
+                "tags": ["Autenticação"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            },
+                            "example": {
+                                "email": "email@email.com",
+                                "password": "123456"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "token": "seuTokenAqui"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas!"
+                    }
+                }
+            }
+        },
         "/users": {
             "post": {
                 "summary": "Criação de usuário",
