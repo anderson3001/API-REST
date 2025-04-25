@@ -170,7 +170,7 @@
                             }
                         }
                     },
-                    "401": {
+                    "403": {
                         "description": "Token inválido!"
                     }
                 }
@@ -213,6 +213,63 @@
                     }
                 }
                 
+            },
+            "patch": {
+                "summary": "Atualização de usuário",
+                "description": "Atualiza os dados de um usuário.",
+                "tags": ["Usuário"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do usuário",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            },
+                            "example": {
+                                "email": "emailModificado@email.com"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":  {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                },
+                                "example": {
+                                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                                    "name": "Anderson Gomes",
+                                    "email": "emailModificado@email.com",
+                                    "password": "senhaCriptografada",
+                                    "photo": "urlDaFoto"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Token inválido!"
+                    }
+                }
+
             }
         }
     },
