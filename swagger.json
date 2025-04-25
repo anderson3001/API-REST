@@ -267,6 +267,36 @@
                         "description": "Token inválido!"
                     }
                 }
+            },
+            "delete": {
+                "summary": "Deletar usuário",
+                "description": "Deleta um usuário.",
+                "tags": ["Usuário"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do usuário",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Usuário deletado com sucesso!"                        
+                    },
+                    "403": {
+                        "description": "Você não pode deletar esse usuário!"
+                    }
+                }
             }
         },
         "/users/{userId}/avatar": {
