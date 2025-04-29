@@ -346,6 +346,48 @@
                     }
                 }
             }
+        },
+        "/posts": {
+            "post": {
+                "summary": "Criação de post",
+                "description": "Cria um novo post.",
+                "tags": ["Post"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Título do post"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Conteúdo do post"
+                                    },
+                                    "photo": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "description":"Imagem opcional do post"
+                                    }
+                                },
+                                "required": ["title", "content"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Post criado com sucesso!"
+                    }
+                }
+            }
         }
     },
     "components": {
