@@ -999,6 +999,41 @@
                     }
                 }
             }
+        },
+        "/like":{
+            "post": {
+                "summary": "Criação de like",
+                "description": "Cria um novo like em um post ou comentário.",
+                "tags": ["Like"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/like"
+                            },
+                            "example": {
+                                "postId": "08abe570-371d-415c-aae0-aeb66057835b"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Like criado com sucesso!"
+                    },
+                    "400": {
+                        "description": "Você já curtiu esse post ou comentário!"
+                    },
+                    "401": {
+                        "description": "Token não autorizado!"
+                    }
+                }
+            }
         }
     },
     "components": {
