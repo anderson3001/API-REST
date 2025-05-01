@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 import { PrismaLikesRepository } from "../../../repositories/prisma/prisma-likes-repository"
 import { CreateLikeUseCase } from "../../../use-cases/likes/create-like-use-case"
+import { ResourceNotFoundError } from "../../../use-cases/@errors/resource-not-found-error"
 
 export async function create(request: FastifyRequest,reply: FastifyReply) {
     const createBodySchema = z.object({
@@ -44,6 +45,9 @@ export async function create(request: FastifyRequest,reply: FastifyReply) {
         })
 
     } catch (err) {
+        if (err instanceof ResourceNotFoundError){
+                return reply.status(404).send({message: err.message})
+            }
         throw err
     }
 
