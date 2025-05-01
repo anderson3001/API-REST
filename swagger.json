@@ -1219,6 +1219,37 @@
                         "description": "Like não encontrado"
                     }
                 }
+            },
+            "delete": {
+                "summary": "Deletar like",
+                "description": "Deleta um like",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": ["Like"],
+                "parameters":[{
+                    "name": "likeId",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID do like",
+                    "schems": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                }],
+                "responses": {
+                    "204": {
+                        "description": "Like deletado com sucesso!"
+                    },
+                    "401": {
+                        "description": "Você não pode deletar esse like!"
+                    },
+                    "404": {
+                        "description": "Like não encontrado!"
+                    }
+                }
             }
         }
     },
