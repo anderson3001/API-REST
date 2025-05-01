@@ -1181,6 +1181,45 @@
                     }
                 }
             }
+        },
+        "/like/{likeId}": {
+            "get": {
+                "summary": "Busca um like",
+                "description": "Retorna o like",
+                "tags": ["Like"],
+                "parameters":[{
+                    "name": "likeId",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID do like",
+                    "schema": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Like",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/like"
+                                },
+                                "example": {
+                                    "id": "6b56a8d6-c719-49b0-b326-909ddec70935",
+                                    "created_at": "2025-05-01T20:47:37.850Z",
+                                    "userId": "85ef13e8-d3c3-4b1f-ac9c-b49b1a9a37f1",
+                                    "postId": "08abe570-371d-415c-aae0-aeb66057835b",
+                                    "commentId": null
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Like não encontrado"
+                    }
+                }
+            }
         }
     },
     "components": {
