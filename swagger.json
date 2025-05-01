@@ -965,6 +965,39 @@
                         "description": "Comentário não encontrado!"
                     }
                 }
+            },
+            "delete": {
+                "summary": "Deletar comentário",
+                "description": "Deleta um comentário.",
+                "tags": ["Comentário"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "commentId",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do comentário",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Comentário deletado com sucesso!"
+                    },
+                    "401": {
+                        "description": "Você não pode deletar esse comentário!"
+                    },
+                    "404": {
+                        "description": "Comentário não encontrado!"
+                    }
+                }
             }
         }
     },
