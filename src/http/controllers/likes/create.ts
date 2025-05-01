@@ -20,13 +20,13 @@ export async function create(request: FastifyRequest,reply: FastifyReply) {
             userId,
             postId,
             commentId
-          })
-      
-          if (existingLike) {
+        })
+
+        if (existingLike) {
             return reply.status(400).send({
-              message: "Você já curtiu esse post ou comentário."
+                message: "Você já curtiu esse post ou comentário."
             })
-          }
+        }
 
         const createLikeUseCase = new CreateLikeUseCase(prismaLikesRepository)
 
