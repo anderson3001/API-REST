@@ -672,6 +672,42 @@
                     }
                 }
             }
+        },
+        "/comment": {
+            "post": {
+                "summary": "Criação de comentário",
+                "description": "Cria um novo comentário em um post.",
+                "tags": ["Comentário"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/comment"
+                            },
+                            "example": {
+                                "content": "Comentário de exemplo",
+                                "postId": "08abe570-371d-415c-aae0-aeb66057835b"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Comentário criado com sucesso!"
+                    },
+                    "401": {
+                        "description": "Token não autorizado!"
+                    },
+                    "404": {
+                        "description": "Post não encontrado!"
+                    }
+                }
+            }
         }
     },
     "components": {
