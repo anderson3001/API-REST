@@ -1034,6 +1034,57 @@
                     }
                 }
             }
+        },
+        "/like/user/{userId}":{
+            "get": {
+                "summary": "Busca os likes de um usuário",
+                "description": "Retorna uma lista de likes de um usuário específico.",
+                "tags": ["Like"],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do usuário",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de likes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/like"
+                                    }
+                                },
+                                "example":[
+                                    {
+                                      "id": "6b56a8d6-c719-49b0-b326-909ddec70935",
+                                      "created_at": "2025-05-01T20:47:37.850Z",
+                                      "userId": "85ef13e8-d3c3-4b1f-ac9c-b49b1a9a37f1",
+                                      "postId": "08abe570-371d-415c-aae0-aeb66057835b",
+                                      "commentId": null
+                                    },
+                                    {
+                                      "id": "f34f9ac5-0f30-4f56-b7ac-e23a6376c03c",
+                                      "created_at": "2025-05-01T20:49:54.784Z",
+                                      "userId": "85ef13e8-d3c3-4b1f-ac9c-b49b1a9a37f1",
+                                      "postId": "08abe570-371d-415c-aae0-aeb66057835b",
+                                      "commentId": null
+                                    }
+                                  ]
+                            }
+                        }
+                    }
+                }
+            }
+            
         }
     },
     "components": {
