@@ -78,4 +78,17 @@ export class PrismaLikesRepository implements LikesRepository {
       
           return filteredLikes;
     }
+    async findByUserAndTarget({ userId, postId, commentId }: {
+        userId: string
+        postId?: string
+        commentId?: string
+      }) {
+        return await prisma.like.findFirst({
+          where: {
+            userId,
+            postId: postId ?? undefined,
+            commentId: commentId ?? undefined
+          }
+        })
+      }
 }
