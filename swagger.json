@@ -343,6 +343,9 @@
                     },
                     "403": {
                         "description": "Token inválido!"
+                    },
+                    "401": {
+                        "description": "Você não pode atualizar a foto de perfil desse usuário!"
                     }
                 }
             }
@@ -385,6 +388,9 @@
                 "responses": {
                     "201": {
                         "description": "Post criado com sucesso!"
+                    },
+                    "401": {
+                        "description": "Token não autorizado!"
                     }
                 }
             }
