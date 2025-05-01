@@ -638,6 +638,39 @@
                         "description": "Post não encontrado!"
                     }
                 }
+            },
+            "delete": {
+                "summary": "Deletar post",
+                "description": "Deleta um post.",
+                "tags": ["Post"],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do post",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Post deletado com sucesso!"
+                    },
+                    "401": {
+                        "description": "Você não pode deletar esse post!"
+                    },
+                    "404": {
+                        "description": "Post não encontrado!"
+                    }
+                }
             }
         }
     },
