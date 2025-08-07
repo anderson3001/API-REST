@@ -38,12 +38,12 @@ export async function create(request: FastifyRequest,reply: FastifyReply) {
         throw new Error("O like não pode estar associado a um post e um comentário ao mesmo tempo.");
         }
 
-        await createLikeUseCase.execute({
+        const { like } = await createLikeUseCase.execute({
             userId,
             postId,
             commentId
         })
-
+        return reply.status(201).send(like)
     } catch (err) {
         if (err instanceof ResourceNotFoundError){
                 return reply.status(404).send({message: err.message})
@@ -51,5 +51,5 @@ export async function create(request: FastifyRequest,reply: FastifyReply) {
         throw err
     }
 
-    return reply.status(201).send("Like criado com sucesso!")
+
 }

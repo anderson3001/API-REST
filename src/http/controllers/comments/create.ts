@@ -29,16 +29,14 @@ export async function create(request: FastifyRequest,reply: FastifyReply) {
         const prismaCommentsRepository = new PrismaCommentsRepository()
         const createCommentUseCase = new CreateCommentUseCase(prismaCommentsRepository)
 
-        await createCommentUseCase.execute({
+        const { comment } = await createCommentUseCase.execute({
             content,
             userId,
             postId
         })
 
-        
+        return reply.status(201).send(comment)
     } catch (err) {
         throw err
     }
-
-    return reply.status(201).send("Comentário criado com sucesso!")
 }

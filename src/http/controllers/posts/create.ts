@@ -26,16 +26,17 @@ export async function create(request: FastifyRequest,reply: FastifyReply) {
         const prismaPostsRepository = new PrismaPostsRepository()
         const createPostUseCase = new CreatePostUseCase(prismaPostsRepository)
 
-        await createPostUseCase.execute({
+        const { post } = await createPostUseCase.execute({
             title,
             content,
             userId,
             photo
         })
 
+        
+        return reply.status(201).send(post)
     } catch (err) {
         throw err
     }
 
-    return reply.status(201).send("Post criado com sucesso!")
 }
