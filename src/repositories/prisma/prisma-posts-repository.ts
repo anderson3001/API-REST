@@ -1,6 +1,7 @@
 import { Post, Prisma } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 import { PaginatedPosts, PostsRepository, PostUpdateInput } from "../posts-repository";
+import { UploadService } from "../../services/upload-photo";
 
 export class PrismaPostsRepository implements PostsRepository {
     async findManyById(postIds: string[]): Promise<Post[]> {
@@ -97,12 +98,29 @@ export class PrismaPostsRepository implements PostsRepository {
         return posts
     }
     async removeDeletedPosts() {
-        const deletedPosts = await prisma.post.deleteMany({
+        const deletedPosts = await prisma.post.findMany({
             where: {
-                deleted_at: {
-                    not: null,
-                }
+            deleted_at: {
+                not: null,
+            },
+            },
+            select: {
+            id: true,
+            photo: true,
+            },
+        });
+
+        for (const post of deletedPosts) {
+            if (post.photo) {
+            await UploadService.deleteImage(post.photo);
             }
-        })
+        }
+        await prisma.post.deleteMany({
+            where: {
+            deleted_at: {
+                not: null,
+                },
+            },
+        });
     }
 }
